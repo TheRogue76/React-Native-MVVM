@@ -1,9 +1,10 @@
 import { container } from '../../libs/Core/DI.ts';
 import { HomeScreenViewModel } from './HomeScreenViewModel.ts';
-import { useEffect } from 'react';
+import { useCallback } from 'react';
 import {HomeScreenContent} from "./HomeScreenContent.tsx";
 import { ActivityIndicator, Text } from 'react-native';
 import { observer } from 'mobx-react-lite';
+import { useFocusEffect } from '@react-navigation/core';
 
 export const HomeScreen = () => {
   const viewModel = container.get(HomeScreenViewModel, { autobind: true });
@@ -17,9 +18,9 @@ type Props = {
 
 const HomeScreenBase = observer(({viewModel}: Props) => {
   const state = viewModel.state;
-  useEffect(() => {
-    viewModel.onAppear();
-  }, [viewModel]);
+  useFocusEffect(useCallback(() => {
+    viewModel.onAppear()
+  }, [viewModel]))
 
   if (state.type === 'loading') {
     return <ActivityIndicator />;

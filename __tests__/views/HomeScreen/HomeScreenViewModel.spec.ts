@@ -36,8 +36,6 @@ describe('HomeScreenViewModel', () => {
     // When
     viewModel.onButtonPressed();
     // Then
-    expect(viewModel.state.type).toBe('loaded');
-    expect((viewModel.state as Loaded).data.counter).toBe('1');
     expect(navigation.navigateToDetails).toHaveBeenCalledTimes(1);
   })
 })

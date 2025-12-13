@@ -30,10 +30,6 @@ export class HomeScreenViewModel {
   }
 
   onButtonPressed() {
-    this.state = {
-      type: 'loaded',
-      data: { counter: (++this.counter).toString() },
-    };
     this.navigation.navigateToDetails()
   }
 }

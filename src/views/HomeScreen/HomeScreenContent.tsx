@@ -8,13 +8,13 @@ interface Props {
 }
 
 export const HomeScreenContent = observer(({ state, onButtonPress }: Props) => {
-      return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text>Home Screen counter {state.data.counter}</Text>
-          <Button
-            title="Go to Details"
-            onPress={onButtonPress}
-          />
-        </View>
-      )
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Home Screen counter {state.data.counter}</Text>
+      <Button
+        title="Go to Details"
+        onPress={onButtonPress}
+      />
+    </View>
+  )
 });
