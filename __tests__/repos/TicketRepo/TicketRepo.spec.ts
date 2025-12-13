@@ -1,12 +1,12 @@
 import { mock } from 'jest-mock-extended';
 import { CurrencyFormatter } from '../../../src/libs/StringLibs';
-import { OrderRepoImpl } from '../../../src/repos/OrderRepo/OrderRepo.ts';
+import { TicketRepoImpl } from '../../../src/repos/TicketRepo/TicketRepo.ts';
 
-describe('OrderRepo tests', () => {
+describe('TicketRepo tests', () => {
   const formatter = mock<CurrencyFormatter>();
 
   function createOrderRepo() {
-    return new OrderRepoImpl(formatter);
+    return new TicketRepoImpl(formatter);
   }
 
   test('See if testing works', () => {
@@ -14,7 +14,7 @@ describe('OrderRepo tests', () => {
     const orderRepo = createOrderRepo();
     formatter.format.mockImplementation(input => `${input}`);
     // When
-    const result = orderRepo.latestOrder();
+    const result = orderRepo.latestItem();
     // Then
     expect(result).toBe('1234');
     expect(formatter.format).toHaveBeenCalledTimes(1);
