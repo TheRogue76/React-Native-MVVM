@@ -21,6 +21,7 @@ Pod::Spec.new do |s|
 
   s.dependency 'React-jsi'
   s.dependency 'React-callinvoker'
+  s.dependency 'lottie-ios', '4.5.2'
 
   load 'nitrogen/generated/ios/NativeViews+autolinking.rb'
   add_nitrogen_files(s)

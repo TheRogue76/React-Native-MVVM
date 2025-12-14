@@ -33,9 +33,13 @@ target_sources(
   # Autolinking Setup
   ../nitrogen/generated/android/nativeviewsOnLoad.cpp
   # Shared Nitrogen C++ sources
+  ../nitrogen/generated/shared/c++/HybridLottieSpec.cpp
+  ../nitrogen/generated/shared/c++/views/HybridLottieComponent.cpp
   ../nitrogen/generated/shared/c++/HybridNativeViewsSpec.cpp
   ../nitrogen/generated/shared/c++/views/HybridNativeViewsComponent.cpp
   # Android-specific Nitrogen C++ sources
+  ../nitrogen/generated/android/c++/JHybridLottieSpec.cpp
+  ../nitrogen/generated/android/c++/views/JHybridLottieStateUpdater.cpp
   ../nitrogen/generated/android/c++/JHybridNativeViewsSpec.cpp
   ../nitrogen/generated/android/c++/views/JHybridNativeViewsStateUpdater.cpp
 )

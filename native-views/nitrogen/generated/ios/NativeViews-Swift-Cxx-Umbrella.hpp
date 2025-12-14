@@ -8,10 +8,13 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `HybridLottieSpec` to properly resolve imports.
+namespace margelo::nitro::nativeviews { class HybridLottieSpec; }
 // Forward declaration of `HybridNativeViewsSpec` to properly resolve imports.
 namespace margelo::nitro::nativeviews { class HybridNativeViewsSpec; }
 
 // Include C++ defined types
+#include "HybridLottieSpec.hpp"
 #include "HybridNativeViewsSpec.hpp"
 #include <memory>
 #include <string>
@@ -26,6 +29,8 @@ namespace margelo::nitro::nativeviews { class HybridNativeViewsSpec; }
 #include <NitroModules/DateToChronoDate.hpp>
 
 // Forward declarations of Swift defined types
+// Forward declaration of `HybridLottieSpec_cxx` to properly resolve imports.
+namespace NativeViews { class HybridLottieSpec_cxx; }
 // Forward declaration of `HybridNativeViewsSpec_cxx` to properly resolve imports.
 namespace NativeViews { class HybridNativeViewsSpec_cxx; }
 

@@ -8,6 +8,7 @@ PODS:
   - hermes-engine (0.14.0):
     - hermes-engine/Pre-built (= 0.14.0)
   - hermes-engine/Pre-built (0.14.0)
+  - lottie-ios (4.5.2)
   - NativeModules (0.0.0):
     - boost
     - DoubleConversion
@@ -45,6 +46,7 @@ PODS:
     - fmt
     - glog
     - hermes-engine
+    - lottie-ios (= 4.5.2)
     - NitroModules
     - RCT-Folly
     - RCT-Folly/Fabric
@@ -2775,6 +2777,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - lottie-ios
     - SocketRocket
 
 EXTERNAL SOURCES:
@@ -2952,8 +2955,9 @@ SPEC CHECKSUMS:
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
   hermes-engine: f7b1bbda11bd37179cfea60b5e240f9d508f457c
+  lottie-ios: 96784afc26ea031d3e2b6cae342a4b8915072489
   NativeModules: ee8742cd9a988e76634d564f034090287b5e18a9
-  NativeViews: ceee020f8f7ec32892b1225b50f0891486f1db83
+  NativeViews: a8d4810f48eed13bb55807b364dcdd8c19e7eac4
   NitroModules: 5bc319d441f4983894ea66b1d392c519536e6d23
   RCT-Folly: 846fda9475e61ec7bcbf8a3fe81edfcaeb090669
   RCTDeprecation: 2b70c6e3abe00396cefd8913efbf6a2db01a2b36

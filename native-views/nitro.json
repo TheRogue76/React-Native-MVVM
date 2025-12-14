@@ -11,6 +11,10 @@
     "NativeViews": {
       "swift": "HybridNativeViews",
       "kotlin": "HybridNativeViews"
+    },
+    "Lottie": {
+      "swift": "HybridLottie",
+      "kotlin": "HybridLottie"
     }
   },
   "ignorePaths": ["node_modules"]

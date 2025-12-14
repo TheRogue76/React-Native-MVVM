@@ -8,12 +8,29 @@
 #include "NativeViews-Swift-Cxx-Bridge.hpp"
 
 // Include C++ implementation defined types
+#include "HybridLottieSpecSwift.hpp"
 #include "HybridNativeViewsSpecSwift.hpp"
 #include "NativeViews-Swift-Cxx-Umbrella.hpp"
 #include <NitroModules/NitroDefines.hpp>
 
 namespace margelo::nitro::nativeviews::bridge::swift {
 
+  // pragma MARK: std::shared_ptr<HybridLottieSpec>
+  std::shared_ptr<HybridLottieSpec> create_std__shared_ptr_HybridLottieSpec_(void* NON_NULL swiftUnsafePointer) noexcept {
+    NativeViews::HybridLottieSpec_cxx swiftPart = NativeViews::HybridLottieSpec_cxx::fromUnsafe(swiftUnsafePointer);
+    return std::make_shared<margelo::nitro::nativeviews::HybridLottieSpecSwift>(swiftPart);
+  }
+  void* NON_NULL get_std__shared_ptr_HybridLottieSpec_(std__shared_ptr_HybridLottieSpec_ cppType) {
+    std::shared_ptr<margelo::nitro::nativeviews::HybridLottieSpecSwift> swiftWrapper = std::dynamic_pointer_cast<margelo::nitro::nativeviews::HybridLottieSpecSwift>(cppType);
+    #ifdef NITRO_DEBUG
+    if (swiftWrapper == nullptr) [[unlikely]] {
+      throw std::runtime_error("Class \"HybridLottieSpec\" is not implemented in Swift!");
+    }
+    #endif
+    NativeViews::HybridLottieSpec_cxx& swiftPart = swiftWrapper->getSwiftPart();
+    return swiftPart.toUnsafe();
+  }
+  
   // pragma MARK: std::shared_ptr<HybridNativeViewsSpec>
   std::shared_ptr<HybridNativeViewsSpec> create_std__shared_ptr_HybridNativeViewsSpec_(void* NON_NULL swiftUnsafePointer) noexcept {
     NativeViews::HybridNativeViewsSpec_cxx swiftPart = NativeViews::HybridNativeViewsSpec_cxx::fromUnsafe(swiftUnsafePointer);

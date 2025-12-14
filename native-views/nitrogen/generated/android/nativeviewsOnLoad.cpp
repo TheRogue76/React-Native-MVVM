@@ -15,6 +15,8 @@
 #include <fbjni/fbjni.h>
 #include <NitroModules/HybridObjectRegistry.hpp>
 
+#include "JHybridLottieSpec.hpp"
+#include "views/JHybridLottieStateUpdater.hpp"
 #include "JHybridNativeViewsSpec.hpp"
 #include "views/JHybridNativeViewsStateUpdater.hpp"
 #include <NitroModules/DefaultConstructableObject.hpp>
@@ -28,6 +30,8 @@ int initialize(JavaVM* vm) {
 
   return facebook::jni::initialize(vm, [] {
     // Register native JNI methods
+    margelo::nitro::nativeviews::JHybridLottieSpec::registerNatives();
+    margelo::nitro::nativeviews::views::JHybridLottieStateUpdater::registerNatives();
     margelo::nitro::nativeviews::JHybridNativeViewsSpec::registerNatives();
     margelo::nitro::nativeviews::views::JHybridNativeViewsStateUpdater::registerNatives();
 
@@ -36,6 +40,14 @@ int initialize(JavaVM* vm) {
       "NativeViews",
       []() -> std::shared_ptr<HybridObject> {
         static DefaultConstructableObject<JHybridNativeViewsSpec::javaobject> object("com/margelo/nitro/nativeviews/HybridNativeViews");
+        auto instance = object.create();
+        return instance->cthis()->shared();
+      }
+    );
+    HybridObjectRegistry::registerHybridObjectConstructor(
+      "Lottie",
+      []() -> std::shared_ptr<HybridObject> {
+        static DefaultConstructableObject<JHybridLottieSpec::javaobject> object("com/margelo/nitro/nativeviews/HybridLottie");
         auto instance = object.create();
         return instance->cthis()->shared();
       }
