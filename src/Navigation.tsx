@@ -9,13 +9,34 @@ import {
 import { ServiceIdentifier } from '@inversifyjs/common';
 import { injectable } from '@inversifyjs/core';
 import { container } from './libs/Core/DI.ts';
+import { createNativeBottomTabNavigator } from '@react-navigation/bottom-tabs/unstable';
+import { InitializationScreen } from './views/InitializationScreen/InitializationScreen.tsx';
+import { ProfileScreen } from './views/ProfileScreen/ProfileScreen.tsx';
+
+const HomeStack = createNativeStackNavigator({
+  screens: {
+    Home: HomeScreen,
+  }
+});
+
+const ProfileStack = createNativeStackNavigator({
+  screens: {
+    Profile: ProfileScreen,
+  }
+});
+
+const BottomNavigationStack = createNativeBottomTabNavigator({
+  screens: {
+    HomeStack: HomeStack,
+    ProfileStack: ProfileStack,
+  },
+});
 
 const RootStack = createNativeStackNavigator({
-  initialRouteName: 'Home',
+  initialRouteName: 'Initialization',
   screens: {
-    Home: {
-      screen: HomeScreen,
-    },
+    Initialization: InitializationScreen,
+    TabbedNavigator: BottomNavigationStack,
     Details: DetailsScreen,
   },
 });
@@ -37,7 +58,7 @@ declare global {
 
 export interface Navigation {
   goBack: () => void;
-  navigateToDetails: () => void; // TODO: make this generic
+  navigate: typeof navigationRef.navigate;
 }
 
 @injectable()
@@ -46,8 +67,8 @@ class NavigationImpl implements Navigation {
     navigationRef?.goBack();
   }
 
-  navigateToDetails() {
-    navigationRef?.navigate('Details');
+  navigate(...args: Parameters<typeof navigationRef.navigate>) {
+    navigationRef?.navigate(...args);
   }
 }
 

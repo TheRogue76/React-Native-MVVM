@@ -32,10 +32,10 @@ describe('HomeScreenViewModel', () => {
   test('onButtonPress we navigate to details', () => {
     // Given
     const viewModel = createHomeScreenViewModel();
-    navigation.navigateToDetails.mockImplementation(() => {})
+    navigation.navigate.mockImplementation(() => {})
     // When
     viewModel.onButtonPressed();
     // Then
-    expect(navigation.navigateToDetails).toHaveBeenCalledTimes(1);
+    expect(navigation.navigate).toHaveBeenCalledTimes(1);
   })
 })

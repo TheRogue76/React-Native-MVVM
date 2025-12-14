@@ -30,6 +30,6 @@ export class HomeScreenViewModel {
   }
 
   onButtonPressed() {
-    this.navigation.navigateToDetails()
+    this.navigation.navigate('Details', {id: '123'})
   }
 }

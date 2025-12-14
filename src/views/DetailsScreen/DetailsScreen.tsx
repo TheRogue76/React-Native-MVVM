@@ -1,6 +1,11 @@
 import { View } from 'react-native';
+import { StaticScreenProps } from '@react-navigation/core';
 
-export const DetailsScreen = () => {
+type Props = StaticScreenProps<{
+  id: string;
+}>
+
+export const DetailsScreen = ({} : Props) => {
   return (
     <View />
   )
