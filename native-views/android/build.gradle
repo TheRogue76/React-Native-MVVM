@@ -124,5 +124,6 @@ def kotlin_version = getExtOrDefault("kotlinVersion")
 dependencies {
   implementation "com.facebook.react:react-android"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  implementation 'com.airbnb.android:lottie:6.7.1'
   implementation project(":react-native-nitro-modules")
 }

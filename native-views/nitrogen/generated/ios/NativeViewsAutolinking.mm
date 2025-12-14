@@ -11,6 +11,7 @@
 #import <type_traits>
 
 #include "HybridNativeViewsSpecSwift.hpp"
+#include "HybridLottieSpecSwift.hpp"
 
 @interface NativeViewsAutolinking : NSObject
 @end
@@ -25,6 +26,13 @@
     "NativeViews",
     []() -> std::shared_ptr<HybridObject> {
       std::shared_ptr<HybridNativeViewsSpec> hybridObject = NativeViews::NativeViewsAutolinking::createNativeViews();
+      return hybridObject;
+    }
+  );
+  HybridObjectRegistry::registerHybridObjectConstructor(
+    "Lottie",
+    []() -> std::shared_ptr<HybridObject> {
+      std::shared_ptr<HybridLottieSpec> hybridObject = NativeViews::NativeViewsAutolinking::createLottie();
       return hybridObject;
     }
   );

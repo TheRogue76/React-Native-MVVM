@@ -8,14 +8,19 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `HybridLottieSpec` to properly resolve imports.
+namespace margelo::nitro::nativeviews { class HybridLottieSpec; }
 // Forward declaration of `HybridNativeViewsSpec` to properly resolve imports.
 namespace margelo::nitro::nativeviews { class HybridNativeViewsSpec; }
 
 // Forward declarations of Swift defined types
+// Forward declaration of `HybridLottieSpec_cxx` to properly resolve imports.
+namespace NativeViews { class HybridLottieSpec_cxx; }
 // Forward declaration of `HybridNativeViewsSpec_cxx` to properly resolve imports.
 namespace NativeViews { class HybridNativeViewsSpec_cxx; }
 
 // Include C++ defined types
+#include "HybridLottieSpec.hpp"
 #include "HybridNativeViewsSpec.hpp"
 #include <memory>
 
@@ -25,6 +30,18 @@ namespace NativeViews { class HybridNativeViewsSpec_cxx; }
  */
 namespace margelo::nitro::nativeviews::bridge::swift {
 
+  // pragma MARK: std::shared_ptr<HybridLottieSpec>
+  /**
+   * Specialized version of `std::shared_ptr<HybridLottieSpec>`.
+   */
+  using std__shared_ptr_HybridLottieSpec_ = std::shared_ptr<HybridLottieSpec>;
+  std::shared_ptr<HybridLottieSpec> create_std__shared_ptr_HybridLottieSpec_(void* NON_NULL swiftUnsafePointer) noexcept;
+  void* NON_NULL get_std__shared_ptr_HybridLottieSpec_(std__shared_ptr_HybridLottieSpec_ cppType);
+  
+  // pragma MARK: std::weak_ptr<HybridLottieSpec>
+  using std__weak_ptr_HybridLottieSpec_ = std::weak_ptr<HybridLottieSpec>;
+  inline std__weak_ptr_HybridLottieSpec_ weakify_std__shared_ptr_HybridLottieSpec_(const std::shared_ptr<HybridLottieSpec>& strong) noexcept { return strong; }
+  
   // pragma MARK: std::shared_ptr<HybridNativeViewsSpec>
   /**
    * Specialized version of `std::shared_ptr<HybridNativeViewsSpec>`.
