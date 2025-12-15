@@ -3,7 +3,7 @@ import { useFocusEffect } from '@react-navigation/core';
 import { container } from '../../libs/Core/DI.ts';
 import { InitializationScreenViewModel } from './InitializationScreenViewModel.ts';
 import { observer } from 'mobx-react-lite';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 
 // Basic screen after splash screen, can be used for app initialization like fetching remote config etc
 export const InitializationScreen = () => {
@@ -23,5 +23,9 @@ const InitializationScreenBase = observer(({viewModel}: Props) => {
     }, [viewModel]),
   );
 
-  return <View /> // Add you actual splash screen animation
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Init Screen</Text>
+    </View>
+  )
 })

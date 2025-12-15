@@ -18,14 +18,14 @@
     "inversify": "^7.10.6",
     "mobx": "^6.15.0",
     "mobx-react-lite": "^4.1.1",
+    "native-modules": "link:./native-modules",
+    "native-views": "link:./native-views",
     "react": "19.2.0",
     "react-native": "0.83.0",
+    "react-native-nitro-modules": "0.31.10",
     "react-native-safe-area-context": "^5.6.2",
     "react-native-screens": "^4.18.0",
-    "reflect-metadata": "^0.2.2",
-    "react-native-nitro-modules": "0.31.10",
-    "native-modules": "link:./native-modules",
-    "native-views": "link:./native-views"
+    "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -45,6 +45,7 @@
     "@types/react-test-renderer": "^19.1.0",
     "babel-plugin-react-compiler": "^1.0.0",
     "babel-plugin-transform-typescript-metadata": "^0.4.0",
+    "detox": "^20.46.0",
     "eslint": "^8.19.0",
     "jest": "^29.6.3",
     "jest-mock-extended": "^4.0.0",
