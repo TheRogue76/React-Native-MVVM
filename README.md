@@ -7,17 +7,22 @@ The guiding principals for this template are as follows:
 - Avoid writing logic in hooks, write them in classes, use DI when necessary to provide access to that logic to the needed viewmodels.
 - Avoid external third party dependencies that are not pure JS when reasonable. Write what you need in terms of native code instead so updates are painless
 
-The general architecture of this template and how it is supposed to be used can be found here: //TODO
+The general architecture of this template and how it is supposed to be used can be best described as follows:
 
+- Libs: Atomic pieces of logic, say your currency formatter, your analytics implementation, you network interceptors, etc
+- Repos: Domain logic. This is where the bulk of your apps logic exists. Each repo is in charge of a specific domain, like your user repo, your initialization repo, your in app purchase repo, etc. Stuff like caching should be handled here
+- Views: The UI logic for each screen, built from the data coming from the repos
 
-This template is powered by tools that the community already uses, such as:
-- [React native community CLI for the bare workflow](https://github.com/react-native-community/cli)
-- [Inversify for Dependency injection](https://github.com/inversify/monorepo)
-- [MobX for view models reactivity](https://github.com/mobxjs/mobx)
-- [React Navigation for the navigation and deep linking systems](https://github.com/react-navigation/react-navigation)
-- [Nitro modules for native views and native modules](https://github.com/mrousavy/nitro)
-- [Jest for unit testing](https://github.com/jestjs/jest)
-- [Detox for E2E testing](https://github.com/wix/Detox)
+![layers.png](layers.png)
+
+*Important to note*: Layers can not have horizantal dependencies. Libs can not depend on each other, repos can not rely on each other, and view models can not rely on each other. Otherwise we will have cyclical dependencies
+
+For communication between the different layers, we use and `inversify` container as a service discovery layer.
+
+Each module attaches itself to the container, and declares whether it should be a singelton (like your repos and authentication logic that is shared between different pieces) or if it should be something that gets created everytime we ask for one (Say a view model)
+
+The other layers can simply ask for those dependencies afterward from the container. This will make it easy to do tests and mock their dependencies.
+
 # Getting Started
 
 > **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
@@ -140,6 +145,16 @@ and
 yarn test:e2e:run:android
 ```
 respectively.
+
+# Acknowledgements
+This template is powered by tools that the community already uses, such as:
+- [React native community CLI for the bare workflow](https://github.com/react-native-community/cli)
+- [Inversify for Dependency injection](https://github.com/inversify/monorepo)
+- [MobX for view models reactivity](https://github.com/mobxjs/mobx)
+- [React Navigation for the navigation and deep linking systems](https://github.com/react-navigation/react-navigation)
+- [Nitro modules for native views and native modules](https://github.com/mrousavy/nitro)
+- [Jest for unit testing](https://github.com/jestjs/jest)
+- [Detox for E2E testing](https://github.com/wix/Detox)
 
 # Learn More
 
