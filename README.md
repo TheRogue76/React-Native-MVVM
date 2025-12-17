@@ -106,6 +106,9 @@ For more instructions on native module setup read:
 - Views: https://nitro.margelo.com/docs/view-components
 - Modules: https://nitro.margelo.com/docs/how-to-build-a-nitro-module
 
+*IMPORTANT TO NOTE*: Any native module/view that you create, you will also need to create a mock for as well in jest.
+You can do it locally per the tests that need your native module, or you can use the global ones provided under `setup-test.js` if you don't care about their output
+
 ## Step 5: Running unit tests with Jest
 
 This template is already setup with examples and all the necessary bits out of the box to have Unit testing working
