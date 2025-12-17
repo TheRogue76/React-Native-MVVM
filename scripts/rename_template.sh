@@ -157,6 +157,9 @@ replace_in_file "android/app/build.gradle" "applicationId \"$ANDROID_PACKAGE\"" 
 replace_in_file "android/app/src/main/java/com/awesomeproject/MainActivity.kt" "package $ANDROID_PACKAGE" "package $NEW_ANDROID_PACKAGE"
 replace_in_file "android/app/src/main/java/com/awesomeproject/MainApplication.kt" "package $ANDROID_PACKAGE" "package $NEW_ANDROID_PACKAGE"
 
+# Update package name in androidTest Java files
+replace_in_file "android/app/src/androidTest/java/com/awesomeproject/DetoxTest.java" "package $ANDROID_PACKAGE" "package $NEW_ANDROID_PACKAGE"
+
 # Move Android source files to new package directory
 if [ -d "android/app/src/main/java/com/awesomeproject" ]; then
     echo "Moving Android source files to new package directory..."
@@ -167,6 +170,18 @@ if [ -d "android/app/src/main/java/com/awesomeproject" ]; then
     # Remove empty parent directories if they exist
     rmdir android/app/src/main/java/com 2>/dev/null || true
     echo -e "${GREEN}✓${NC} Moved Android source files"
+fi
+
+# Move Android test files to new package directory
+if [ -d "android/app/src/androidTest/java/com/awesomeproject" ]; then
+    echo "Moving Android test files to new package directory..."
+    mkdir -p "android/app/src/androidTest/java/${ANDROID_PATH}"
+    mv android/app/src/androidTest/java/com/awesomeproject/*.java "android/app/src/androidTest/java/${ANDROID_PATH}/"
+    # Clean up old directory structure
+    rm -rf android/app/src/androidTest/java/com/awesomeproject
+    # Remove empty parent directories if they exist
+    rmdir android/app/src/androidTest/java/com 2>/dev/null || true
+    echo -e "${GREEN}✓${NC} Moved Android test files"
 fi
 
 # 5. Rename iOS directories and files first (before updating bundle ID)
