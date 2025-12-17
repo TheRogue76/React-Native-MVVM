@@ -1,8 +1,11 @@
+# Introduction
+
 React Native Launchpad is an opinionated, batteries included template for building scalable testable apps
 The guiding principals for this template are as follows:
 - Logic should be as easy to test as it is to develop
-- React should empower the native, not try to wrap it away
+- React should empower the native, not try to abstract it away
 - Avoid writing logic in hooks, write them in classes, use DI when necessary to provide access to that logic to the needed viewmodels.
+- Avoid external third party dependencies that are not pure JS when reasonable. Write what you need in terms of native code instead so updates are painless
 
 The general architecture of this template and how it is supposed to be used can be found here: //TODO
 
@@ -88,18 +91,20 @@ When you want to forcefully reload, for example to reset the state of your app, 
 - **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
 - **iOS**: Press <kbd>R</kbd> in iOS Simulator.
 
-## Congratulations! :tada:
+## Step 4: Add native modules and views
 
-You've successfully run and modified your React Native App. :partying_face:
+Depending on if you want to add native views (Say Webview, Lottie) or native modules (Bluetooth, SQL) you can go inside the `native-views` or the `native-modules` directories and define your interface in TypeScript.
 
-### Now what?
+You can then run 
+```shell
+npx nitro
+```
+in that directory and it will generate the respective Kotlin and Swift interfaces, that you can then use to develop your logic
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+For more instructions on native module setup read:
 
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+- Views: https://nitro.margelo.com/docs/view-components
+- Modules: https://nitro.margelo.com/docs/how-to-build-a-nitro-module
 
 # Learn More
 
