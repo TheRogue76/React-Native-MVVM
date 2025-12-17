@@ -2951,7 +2951,7 @@ SPEC CHECKSUMS:
   FBLazyVector: a293a88992c4c33f0aee184acab0b64a08ff9458
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
-  hermes-engine: f7b1bbda11bd37179cfea60b5e240f9d508f457c
+  hermes-engine: 7533acfde769247d263402cea7342b7d3cb3a892
   NativeModules: ee8742cd9a988e76634d564f034090287b5e18a9
   NativeViews: ceee020f8f7ec32892b1225b50f0891486f1db83
   NitroModules: 5bc319d441f4983894ea66b1d392c519536e6d23
