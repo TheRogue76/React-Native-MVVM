@@ -7,7 +7,7 @@ import { observer } from 'mobx-react-lite';
 import { useFocusEffect } from '@react-navigation/core';
 
 export const HomeScreen = () => {
-  const viewModel = container.resolve(homeViewModelSI)
+  const viewModel = container.resolve(homeViewModelSI);
 
   return <HomeScreenBase viewModel={viewModel} />
 };
