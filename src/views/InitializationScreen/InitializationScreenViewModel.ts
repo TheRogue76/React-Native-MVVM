@@ -1,6 +1,7 @@
-import { transient, get } from 'launchpad-dependency-injection';
+import { transient, get, createToken } from 'launchpad-dependency-injection';
 import { type Navigation, navigationSI } from '../../Navigation.tsx';
 import { makeAutoObservable } from 'mobx';
+import { container } from '../../libs/Core/DI.ts';
 
 @transient()
 export class InitializationScreenViewModel {
@@ -19,3 +20,8 @@ export class InitializationScreenViewModel {
     }, 1000);
   }
 }
+
+export const initializationViewModelSI =
+  createToken<InitializationScreenViewModel>('InitializationScreenViewModel');
+
+container.register(initializationViewModelSI, InitializationScreenViewModel);

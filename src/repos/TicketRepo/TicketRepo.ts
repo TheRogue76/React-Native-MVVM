@@ -1,18 +1,21 @@
 import { type CurrencyFormatter, currencyFormatterSI } from '../../libs/StringLibs';
-import { get, singleton } from 'launchpad-dependency-injection';
-import { type TicketRemoteDataSource } from './datasource/TicketRemoteDataSource.ts';
-// import { type Ticket, mapTicketResponseToTicket } from './Models/Ticket';
-import { ticketRemoteDataSourceSI } from './module.ts';
+import { createToken, get, singleton } from 'launchpad-dependency-injection';
+import {
+  type TicketRemoteDataSource,
+  ticketRemoteDataSourceSI,
+} from './datasource/TicketRemoteDataSource.ts';
+import { type Ticket, mapTicketResponseToTicket } from './Models/Ticket';
+import { container } from '../../libs/Core/DI.ts';
 
 export interface TicketRepo {
   latestItem(): string;
-  // fetchTickets(): Promise<Ticket[]>;
+  fetchTickets(): Promise<Ticket[]>;
 }
 
 @singleton()
 export class TicketRepoImpl implements TicketRepo {
   private currencyFormatter: CurrencyFormatter;
-  private ticketRemoteDataSource: TicketRemoteDataSource;
+  private readonly ticketRemoteDataSource: TicketRemoteDataSource;
   constructor(currencyFormatter?: CurrencyFormatter,ticketRemoteDataSource?: TicketRemoteDataSource) {
     this.currencyFormatter = currencyFormatter ?? get(currencyFormatterSI)
     this.ticketRemoteDataSource = ticketRemoteDataSource ?? get(ticketRemoteDataSourceSI)
@@ -22,8 +25,11 @@ export class TicketRepoImpl implements TicketRepo {
     return this.currencyFormatter.format(1234);
   }
 
-  // async fetchTickets(): Promise<Ticket[]> {
-  //   const apiResponse = await this.ticketRemoteDataSource.fetchTickets();
-  //   return apiResponse.map(mapTicketResponseToTicket);
-  // }
+  async fetchTickets(): Promise<Ticket[]> {
+    const apiResponse = await this.ticketRemoteDataSource.fetchTickets();
+    return apiResponse.map(mapTicketResponseToTicket);
+  }
 }
+export const ticketRepoSI = createToken<TicketRepo>('ticketRepo');
+
+container.register(ticketRepoSI, TicketRepoImpl);

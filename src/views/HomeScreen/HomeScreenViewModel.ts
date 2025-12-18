@@ -1,7 +1,8 @@
-import { get, transient } from 'launchpad-dependency-injection';
+import { createToken, get, transient } from 'launchpad-dependency-injection';
 import { type TicketRepo, ticketRepoSI } from '../../repos/TicketRepo';
 import { type Navigation, navigationSI } from '../../Navigation.tsx';
 import { makeAutoObservable } from 'mobx';
+import { container } from '../../libs/Core/DI.ts';
 
 type State = Loading | Error | Loaded;
 type Loading = { type: 'loading' };
@@ -32,3 +33,8 @@ export class HomeScreenViewModel {
     this.navigation.navigate('Details', {id: '123'})
   }
 }
+
+export const homeViewModelSI = createToken<HomeScreenViewModel>(
+  'HomeScreenViewModel',
+);
+container.register(homeViewModelSI, HomeScreenViewModel);

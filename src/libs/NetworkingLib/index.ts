@@ -1,2 +1,1 @@
-export { type NetworkClient } from './NetworkClient';
-export { networkClientSI } from './module';
+export { type NetworkClient, networkClientSI } from './NetworkClient';

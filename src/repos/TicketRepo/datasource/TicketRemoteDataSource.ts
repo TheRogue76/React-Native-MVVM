@@ -1,4 +1,4 @@
-import { get, singleton } from 'launchpad-dependency-injection';
+import { createToken, get, singleton } from 'launchpad-dependency-injection';
 import {
   type NetworkClient,
   networkClientSI,
@@ -7,6 +7,7 @@ import {
   GetTicketListResponseSchema,
   GetTicketResponse,
 } from '../Models/internal/GetTicketResponse.ts';
+import { container } from '../../../libs/Core/DI.ts';
 
 export interface TicketRemoteDataSource {
   fetchTickets(): Promise<GetTicketResponse[]>;
@@ -29,3 +30,8 @@ export class TicketRemoteDataSourceImpl implements TicketRemoteDataSource {
     );
   }
 }
+
+export const ticketRemoteDataSourceSI = createToken<TicketRemoteDataSource>(
+  'TicketRemoteDataSource',
+);
+container.register(ticketRemoteDataSourceSI, TicketRemoteDataSourceImpl);
