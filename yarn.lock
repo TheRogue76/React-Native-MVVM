@@ -1117,47 +1117,6 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-2.0.3.tgz#4a2868d75d6d6963e423bcf90b7fd1be343409d3"
   integrity sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==
 
-"@inversifyjs/common@1.5.2":
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/@inversifyjs/common/-/common-1.5.2.tgz#6836287fef1c25dddbdf6af345a33a6d6caf6835"
-  integrity sha512-WlzR9xGadABS9gtgZQ+luoZ8V6qm4Ii6RQfcfC9Ho2SOlE6ZuemFo7PKJvKI0ikm8cmKbU8hw5UK6E4qovH21w==
-
-"@inversifyjs/container@1.14.3":
-  version "1.14.3"
-  resolved "https://registry.yarnpkg.com/@inversifyjs/container/-/container-1.14.3.tgz#6070e4191fb8bc53ddd99f2f430f2ed9344f7258"
-  integrity sha512-dt9JwumXFpIQx2hbsCouDLdZ6sVMvkdUcwyM8hugRbXMCxSJ3nDd2pjdE4MGWyfWP/61zDiAXCiff+2jVrhcmw==
-  dependencies:
-    "@inversifyjs/common" "1.5.2"
-    "@inversifyjs/core" "9.1.1"
-    "@inversifyjs/plugin" "0.2.0"
-    "@inversifyjs/reflect-metadata-utils" "1.4.1"
-
-"@inversifyjs/core@9.1.1":
-  version "9.1.1"
-  resolved "https://registry.yarnpkg.com/@inversifyjs/core/-/core-9.1.1.tgz#d6df9cdc10d9b01a65036bf9cf94b97e8ff187ab"
-  integrity sha512-3GNF/a889+Z3AxMZGl5LvBaHYIRvn+rm4b6jec3YncyqNRXoLQjUUAleE0AbVUdUl8YntJ5NW+qe5vjbM0wk/w==
-  dependencies:
-    "@inversifyjs/common" "1.5.2"
-    "@inversifyjs/prototype-utils" "0.1.3"
-    "@inversifyjs/reflect-metadata-utils" "1.4.1"
-
-"@inversifyjs/plugin@0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@inversifyjs/plugin/-/plugin-0.2.0.tgz#03957c7d02803f32254a2ff2f8f8ffb05ec57eec"
-  integrity sha512-R/JAdkTSD819pV1zi0HP54mWHyX+H2m8SxldXRgPQarS3ySV4KPyRdosWcfB8Se0JJZWZLHYiUNiS6JvMWSPjw==
-
-"@inversifyjs/prototype-utils@0.1.3":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@inversifyjs/prototype-utils/-/prototype-utils-0.1.3.tgz#c720e7d2d847e4748534c5986b25e271186898d2"
-  integrity sha512-EzRamZzNgE9Sn3QtZ8NncNa2lpPMZfspqbK6BWFguWnOpK8ymp2TUuH46ruFHZhrHKnknPd7fG22ZV7iF517TQ==
-  dependencies:
-    "@inversifyjs/common" "1.5.2"
-
-"@inversifyjs/reflect-metadata-utils@1.4.1":
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/@inversifyjs/reflect-metadata-utils/-/reflect-metadata-utils-1.4.1.tgz#6219df487e6aab1810a0feee4a625a0e11397340"
-  integrity sha512-Cp77C4d2wLaHXiUB7iH6Cxb7i1lD/YDuTIHLTDzKINqGSz0DCSoL/Dg2wVkW/6Qx03r/yQMLJ+32Agl32N2X8g==
-
 "@isaacs/ttlcache@^1.4.1":
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/@isaacs/ttlcache/-/ttlcache-1.4.1.tgz#21fb23db34e9b6220c6ba023a0118a2dd3461ea2"
@@ -4172,15 +4131,6 @@ invariant@^2.2.4:
   dependencies:
     loose-envify "^1.0.0"
 
-inversify@^7.10.6:
-  version "7.10.6"
-  resolved "https://registry.yarnpkg.com/inversify/-/inversify-7.10.6.tgz#2c03528fa61c4f678e1950c967802ae8a36c7885"
-  integrity sha512-pjJfyS9KS5Q4aIKx2Mc/mPnyxMParygddMY66irM+IIZUv3+Qp9pjEu+rMmUYPxGqaX2QgDIU/pH1t2eb3xodw==
-  dependencies:
-    "@inversifyjs/common" "1.5.2"
-    "@inversifyjs/container" "1.14.3"
-    "@inversifyjs/core" "9.1.1"
-
 is-array-buffer@^3.0.4, is-array-buffer@^3.0.5:
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/is-array-buffer/-/is-array-buffer-3.0.5.tgz#65742e1e687bd2cc666253068fd8707fe4d44280"
@@ -5028,6 +4978,13 @@ launch-editor@^2.9.1:
   dependencies:
     picocolors "^1.1.1"
     shell-quote "^1.8.3"
+
+launchpad-dependency-injection@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/launchpad-dependency-injection/-/launchpad-dependency-injection-1.1.0.tgz#ed2bef49afc462216787233e7c53c8e4f4b4bf1b"
+  integrity sha512-6yP/Vm5RWF+A+J01NFnk9lcYv32ASg0zNvxop0kL7Kki3TfO8lsTDRNo9YdQ0c3nO8plebLclj9i4AZzjokfqQ==
+  dependencies:
+    reflect-metadata "^0.2.2"
 
 leven@^3.1.0:
   version "3.1.0"
@@ -7320,3 +7277,8 @@ yocto-queue@^0.1.0:
   version "4.1.13"
   resolved "https://registry.yarnpkg.com/zod/-/zod-4.1.13.tgz#93699a8afe937ba96badbb0ce8be6033c0a4b6b1"
   integrity sha512-AvvthqfqrAhNH9dnfmrfKzX5upOdjUVJYFqNSlkmGf64gRaTzlPwz99IHYnVs28qYAybvAlBV+H7pn0saFY4Ig==
+
+zod@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-4.2.1.tgz#07f0388c7edbfd5f5a2466181cb4adf5b5dbd57b"
+  integrity sha512-0wZ1IRqGGhMP76gLqz8EyfBXKk0J2qo2+H3fi4mcUP/KtTocoX08nmIAHl1Z2kJIZbZee8KOpBCSNPRgauucjw==

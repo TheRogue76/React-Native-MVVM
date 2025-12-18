@@ -18,11 +18,24 @@ The general architecture of this template and how it is supposed to be used can 
 
 *Important to note*: Layers can not have horizontal dependencies. Libs can not depend on each other, repos can not rely on each other, and view models can not rely on each other. Otherwise we will have cyclical dependencies
 
-For communication between the different layers, we use an `inversify` container as a service discovery layer.
+For communication between the different layers, we use a lightweight custom DI container (`launchpad-dependency-injection`) as a service discovery layer.
 
-Each module attaches itself to the container, and declares whether it should be a singleton (like your repos and authentication logic that is shared between different pieces) or if it should be something that gets created every time we ask for one (Say a view model)
+Each module registers itself with the container in the same file where it's implemented. Repos and Libs are singletons (shared across the app), while ViewModels are transient (new instance per use).
 
-The other layers can simply ask for those dependencies afterward from the container. This will make it easy to do tests and mock their dependencies.
+The registration pattern looks like this:
+```typescript
+@singleton()
+export class TicketRepoImpl implements TicketRepo {
+  constructor(dependency?: Dependency) {
+    this.dependency = dependency ?? get(dependencySI);
+  }
+}
+
+export const ticketRepoSI = createToken<TicketRepo>('ticketRepo');
+container.register(ticketRepoSI, TicketRepoImpl);
+```
+
+This pattern makes testing easy - just pass mocks directly to constructors. In production, the DI container resolves dependencies automatically.
 
 # Getting Started
 
@@ -174,10 +187,11 @@ respectively.
 # Acknowledgements
 This template is powered by tools that the community already uses, such as:
 - [React native community CLI for the bare workflow](https://github.com/react-native-community/cli)
-- [Inversify for Dependency injection](https://github.com/inversify/monorepo)
+- [Launchpad Dependency Injection - lightweight DI system](https://github.com/TheRogue76/launchpad-dependency-injection)
 - [MobX for view models reactivity](https://github.com/mobxjs/mobx)
 - [React Navigation for the navigation and deep linking systems](https://github.com/react-navigation/react-navigation)
 - [Nitro modules for native views and native modules](https://github.com/mrousavy/nitro)
+- [Zod for runtime schema validation](https://github.com/colinhacks/zod)
 - [Jest for unit testing](https://github.com/jestjs/jest)
 - [Detox for E2E testing](https://github.com/wix/Detox)
 

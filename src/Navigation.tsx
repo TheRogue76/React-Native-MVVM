@@ -6,8 +6,10 @@ import {
   createNavigationContainerRef,
   StaticParamList,
 } from '@react-navigation/core';
-import { ServiceIdentifier } from '@inversifyjs/common';
-import { injectable } from '@inversifyjs/core';
+import {
+  createToken,
+  singleton,
+} from 'launchpad-dependency-injection';
 import { container } from './libs/Core/DI.ts';
 import { createNativeBottomTabNavigator } from '@react-navigation/bottom-tabs/unstable';
 import { InitializationScreen } from './views/InitializationScreen/InitializationScreen.tsx';
@@ -62,7 +64,7 @@ export interface Navigation {
   reset: typeof navigationRef.reset;
 }
 
-@injectable()
+@singleton()
 class NavigationImpl implements Navigation {
   goBack() {
     navigationRef?.goBack();
@@ -82,7 +84,6 @@ class NavigationImpl implements Navigation {
 }
 
 
-export const navigationSI: ServiceIdentifier<Navigation> =
-  Symbol.for('NavigationInjection');
+export const navigationSI = createToken<Navigation>('NavigationInjection');
 
-container.bind<Navigation>(navigationSI).to(NavigationImpl).inSingletonScope()
+container.register(navigationSI, NavigationImpl);
