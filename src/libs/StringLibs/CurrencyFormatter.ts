@@ -2,7 +2,7 @@ import { createToken, singleton } from 'launchpad-dependency-injection';
 import { container } from '../Core/DI.ts';
 
 export interface CurrencyFormatter {
-  format(number: number): string
+  format(number: number): string;
 }
 
 @singleton()
