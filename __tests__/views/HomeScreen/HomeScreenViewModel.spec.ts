@@ -13,6 +13,11 @@ describe('HomeScreenViewModel', () => {
   function createHomeScreenViewModel() {
     return new HomeScreenViewModel(ticketRepo, navigation);
   }
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   test('when the viewModel is created it starts with a loading screen', () => {
     // Given
     const viewModel = createHomeScreenViewModel();

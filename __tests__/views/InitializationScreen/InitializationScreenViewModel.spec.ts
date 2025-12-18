@@ -11,6 +11,10 @@ describe('InitializationScreenViewModel', () => {
     return new InitializationScreenViewModel(navigation);
   }
 
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   test('onAppear we reset the navigation after 1 second', async () => {
     // Given
     navigation.reset.mockImplementation((input) => {
