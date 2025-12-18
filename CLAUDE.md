@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-React Native Launchpad is an opinionated template for building testable, scalable React Native applications using an MVVM architecture with dependency injection. The template uses React Native 0.83.0, Inversify for DI, MobX for reactivity, and React Navigation for routing.
+React Native Launchpad is an opinionated template for building testable, scalable React Native applications using an MVVM architecture with dependency injection. The template uses React Native 0.83.0, a custom lightweight DI system (`launchpad-dependency-injection`), MobX for reactivity, and React Navigation for routing.
 
 ## Core Architecture Principles
 
@@ -14,47 +14,67 @@ The codebase follows a strict layered architecture with **no horizontal dependen
 2. **Repos** (`src/repos/`): Domain logic layer handling business rules, data fetching, and caching. Repos cannot depend on other repos.
 3. **Views** (`src/views/`): UI components with ViewModels managing screen state. ViewModels cannot depend on other ViewModels.
 
-**Critical Rule**: Dependencies flow downward only (Views → Repos → Libs). Cross-layer communication uses the Inversify container for service discovery.
+**Critical Rule**: Dependencies flow downward only (Views → Repos → Libs). Cross-layer communication uses the DI container for service discovery.
 
 ## Dependency Injection Pattern
 
-All modules use Inversify for dependency injection:
+The template uses a lightweight custom DI system (`launchpad-dependency-injection`). All registration happens directly in the implementation file.
 
-### Module Registration Pattern
+### Registration Pattern
 
-Each module has a `module.ts` file that registers itself with the container:
+Each class registers itself with the container at the bottom of its file:
 
 ```typescript
-// For interfaces (Repos and Libs)
+import { createToken, singleton } from 'launchpad-dependency-injection';
 import { container } from '../../libs/Core/DI.ts';
-import { ServiceIdentifier } from '@inversifyjs/common';
 
-export const ticketRepoSI: ServiceIdentifier<TicketRepo> = Symbol.for('ticketRepo')
-container.bind<TicketRepo>(ticketRepoSI).to(TicketRepoImpl).inSingletonScope()
+export interface TicketRepo {
+  fetchTickets(): Promise<Ticket[]>;
+}
 
-// For ViewModels (transient - new instance per use)
-container.bind(HomeScreenViewModel).toSelf().inTransientScope()
+@singleton()
+export class TicketRepoImpl implements TicketRepo {
+  private currencyFormatter: CurrencyFormatter;
+
+  constructor(currencyFormatter?: CurrencyFormatter) {
+    this.currencyFormatter = currencyFormatter ?? get(currencyFormatterSI);
+  }
+
+  async fetchTickets(): Promise<Ticket[]> {
+    // implementation
+  }
+}
+
+// Create token and register - all in the same file
+export const ticketRepoSI = createToken<TicketRepo>('ticketRepo');
+container.register(ticketRepoSI, TicketRepoImpl);
 ```
 
 ### Dependency Injection in Classes
 
-Use `@injectable()` decorator and `@inject()` for dependencies:
+Use `@singleton()` decorator and optional constructor parameters with fallback to `get()`:
 
 ```typescript
-import { inject, injectable } from '@inversifyjs/core';
+import { singleton, get } from 'launchpad-dependency-injection';
 
-@injectable()
+@singleton()
 export class HomeScreenViewModel {
-  constructor(
-    @inject(ticketRepoSI) private readonly ticketRepo: TicketRepo,
-    @inject(navigationSI) private readonly navigation: Navigation,
-  ) {
+  private ticketRepo: TicketRepo;
+  private navigation: Navigation;
+
+  constructor(ticketRepo?: TicketRepo, navigation?: Navigation) {
+    this.ticketRepo = ticketRepo ?? get(ticketRepoSI);
+    this.navigation = navigation ?? get(navigationSI);
     makeAutoObservable(this);
   }
 }
 ```
 
-**Important**: Always import `reflect-metadata` at the top of entry files for decorators to work.
+**Key Points**:
+- Optional constructor parameters enable easy testing (pass mocks directly)
+- Fallback to `get(token)` for production DI container resolution
+- `@singleton()` ensures single instance across the app
+- Token creation and registration happen in the same file as the implementation
 
 ## ViewModel Pattern
 
@@ -111,13 +131,15 @@ Each repo can have one or more **RemoteDataSource** classes for API communicatio
 - Inject `NetworkClient` into the data source
 - Data sources are registered as singletons in the DI container
 
-**Example**: `TicketRemoteDataSource` (`src/repos/TicketRepo/`)
+**Example**: `TicketRemoteDataSource` (`src/repos/TicketRepo/datasource/`)
 ```typescript
-@injectable()
+@singleton()
 export class TicketRemoteDataSourceImpl implements TicketRemoteDataSource {
-  constructor(
-    @inject(networkClientSI) private readonly networkClient: NetworkClient,
-  ) {}
+  private networkClient: NetworkClient;
+
+  constructor(networkClient?: NetworkClient) {
+    this.networkClient = networkClient ?? get(networkClientSI);
+  }
 
   async fetchTickets(): Promise<GetTicketResponse[]> {
     return this.networkClient.request(
@@ -127,6 +149,9 @@ export class TicketRemoteDataSourceImpl implements TicketRemoteDataSource {
     );
   }
 }
+
+export const ticketRemoteDataSourceSI = createToken<TicketRemoteDataSource>('TicketRemoteDataSource');
+container.register(ticketRemoteDataSourceSI, TicketRemoteDataSourceImpl);
 ```
 
 ### Domain Models and Mappers
@@ -205,22 +230,62 @@ yarn lint               # Run ESLint
 
 ## Testing Patterns
 
+### Test Coverage Requirements
+
+**Test coverage is very important** for this codebase:
+
+- **Repos**: Must have comprehensive unit tests. Every public method should have tests for success and error cases.
+- **ViewModels**: Must have unit tests covering all state transitions and user interactions.
+- **Libs**: Try your best to test them. If a lib is too difficult to test (e.g., complex native integrations), some leeway is acceptable, but document why.
+
+All repos and viewmodels should be thoroughly tested to ensure reliability.
+
 ### Unit Tests
+
 - Tests live in `__tests__/` directory mirroring source structure
 - Use `jest-mock-extended` for creating mocks: `mock<Interface>()`
 - Follow Given-When-Then pattern
-- Manually inject mocked dependencies into constructors (bypass DI container)
+- Pass mocked dependencies directly to constructors (optional parameters make this easy)
 
 Example:
 ```typescript
 import { mock } from 'jest-mock-extended';
 
-const formatter = mock<CurrencyFormatter>();
-const ticketRepo = new TicketRepoImpl(formatter);
-formatter.format.mockImplementation(input => `${input}`);
+describe('TicketRepo tests', () => {
+  test('fetchTickets should map API response to domain models on success', async () => {
+    // Given
+    const formatter = mock<CurrencyFormatter>();
+    const remoteDataSource = mock<TicketRemoteDataSource>();
+    const ticketRepo = new TicketRepoImpl(formatter, remoteDataSource);
+    const mockApiResponse = [
+      { id: 1, userId: 100, title: 'Fix bug', completed: false },
+    ];
+    remoteDataSource.fetchTickets.mockResolvedValue(mockApiResponse);
+
+    // When
+    const result = await ticketRepo.fetchTickets();
+
+    // Then
+    expect(result).toEqual([
+      { id: '1', title: 'Fix bug', isCompleted: false },
+    ]);
+  });
+
+  test('fetchTickets should throw error when remote data source fails', async () => {
+    // Given
+    const formatter = mock<CurrencyFormatter>();
+    const remoteDataSource = mock<TicketRemoteDataSource>();
+    const ticketRepo = new TicketRepoImpl(formatter, remoteDataSource);
+    remoteDataSource.fetchTickets.mockRejectedValue(new Error('Network error'));
+
+    // When/Then
+    await expect(ticketRepo.fetchTickets()).rejects.toThrow('Network error');
+  });
+});
 ```
 
 ### E2E Tests
+
 - Detox configuration in `.detoxrc.js`
 - Tests in `e2e/` directory
 - Must build app before running tests
@@ -241,7 +306,7 @@ yarn ios:pods          # Install pod dependencies
 
 ## Key Files
 
-- `src/libs/Core/DI.ts` - Inversify container instance
+- `src/libs/Core/DI.ts` - DI container instance
 - `src/App.tsx` - Entry point with MobX configuration
 - `setup-jest.js` - Global Jest configuration and native module mocks
 - `.detoxrc.js` - Detox E2E test configuration
@@ -250,7 +315,9 @@ yarn ios:pods          # Install pod dependencies
 ## Important Notes
 
 - Node.js >= 20 required
-- Always create `module.ts` files to register new Repos/Libs/ViewModels with the DI container
-- Repos and Libs are singletons; ViewModels are transient
-- Import module files to ensure registration happens before container.get() calls
+- All DI registration happens at the bottom of implementation files (no separate `module.ts` files)
+- Use `@singleton()` decorator for Repos and Libs (shared domain logic)
+- ViewModels should be transient (new instance per use)
+- Constructor parameters should be optional with `??` fallback to `get(token)` for DI resolution
+- This pattern enables easy testing (pass mocks) and production DI (uses container)
 - Avoid writing logic in React hooks; use ViewModels and Repos instead
